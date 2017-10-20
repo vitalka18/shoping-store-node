@@ -1,0 +1,34 @@
+{{#each products as |chunk|}}
+  <div class="row">
+    {{#each chunk as |product|}}
+      <div class="col-md-4 mb-3">
+        <div class="card" style="width: 20rem;">
+          <div class="card-img" style="background-image: url({{ product.imagePath }});" alt="{{ product.title }}"></div>
+          
+          <div class="card-body">
+            <h4 class="card-title">
+              {{ product.title }}
+            </h4>
+            
+            <div class="card-text">
+              {{ product.description }}
+            </div>
+          </div>
+
+          <div class="card-foot row">
+            <div class="price col-md-5">
+              <span class="price-value text-info pl-3 pr-3 bg-light rounded">
+                <span class="fa fa-usd"></span>{{ product.price }}
+              </span>
+            </div>
+
+            <div class="col-md-7 text-right">
+              <a href="#" class="btn btn-success">Buy</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+{{/each}}
+  
