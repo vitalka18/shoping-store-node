@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+
+
+    <div class="card">
+      
+      <h1 class="card-header bg-info text-white text-center">
+        {{ title }}
+      </h1>
+    
+      <div class="card-body">
+
+        <form action="/users/sign-up" method="post">      
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input class="form-control" name="email" id="email" type="email">
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" name="password" id="password" type="password">
+          </div>
+
+          <div class="form-group">
+            <label for="confirm_password">Confirm Password</label>
+            <input class="form-control" name="confirm_password" id="confirm_password" type="password">
+          </div>
+
+          {{!-- Hidden fields --}}
+            <input name="_csrf" value="{{ csrf }}" type="text" hidden="true">
+          {{!-- /Hidden fields --}}
+
+          <div class="form-btns text-center">
+            <button class="btn btn-warning" type="reset">Reset</button>
+            <button class="btn btn-success text-white" type="submit">Send</button>
+          </div>
+        </form>
+
+      </div>{{!-- /.card-body --}}
+  
+    </div>{{!-- /.card --}}
+
+
+  </div>{{!-- /.col- --}}
+</div>{{!-- /.row --}}

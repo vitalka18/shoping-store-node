@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressHbs = require('express-handlebars');
 var mongoose = require('mongoose');
+var session = require('express-session');
+var ExpressSessions = require('express-sessions');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -27,10 +29,28 @@ app.set('view engine', '.hbs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(session({
+  cookie: {
+    path: '/',
+    httpOnly: true,
+    maxAge: 86400
+  },
+  secret: 'secret_Store_express',
+  name: 'timonAndPumba',
+  store: new ExpressSessions({
+    storage: 'mongodb',
+    instance: mongoose, 
+    host: 'localhost',
+    port: 27017,
+    db: 'shop-store',
+    collection: 'sessions',
+    expire: 86400
+  })
+}));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser('secret_Store_express'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);

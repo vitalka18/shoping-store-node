@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Product = require('../models/product');
-var lodash = require('lodash');
+var { chunk } = require('lodash');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -10,9 +10,9 @@ router.get('/', function(req, res, next) {
       next(err);
     }
 
-    res.render('index', {
+    res.render('shop/index', {
       title: 'Shopping cart',
-      products: lodash.chunk(data, 3)
+      products: chunk(data, 3)
     });
   });
 });
