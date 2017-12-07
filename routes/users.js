@@ -97,7 +97,7 @@ function isLogged(req, res, next) {
 
 function isNotLogged(req, res, next) {
   if (!req.isAuthenticated()) {
-    next();
+    return next();
   }
   return res.redirect('/');
 }
