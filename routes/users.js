@@ -7,18 +7,27 @@ var { check, body, validationResult } = require('express-validator/check');
 var { matchedData, sanitize } = require('express-validator/filter');
 
 /* GET users listing. */
-router.use(validator());
-router.get('/sign-up', csurfProtection, function(req, res, next) {
-  var errors = req.flash('error');
-  res.render('user/signup', {
-    title: 'Sign up',
-    csrf: req.csrfToken(),
-    hasErrors: (errors.length > 0),
-    errorsMessage: errors
-  });
-});
 
-router.post('/sign-up', csurfProtection, [
+router.get('/sign-up',
+  isNotLogged,
+  csurfProtection,
+  
+  function(req, res, next) {
+    var errors = req.flash('error');
+    res.render('user/signup', {
+      title: 'Sign up',
+      csrf: req.csrfToken(),
+      hasErrors: (errors.length > 0),
+      errorsMessage: errors
+    });
+  }
+);
+
+router.post('/sign-up', 
+  isNotLogged,
+  validator(),
+  csurfProtection, 
+  [
     body('email', 'Email field must be an email')
       .exists()
       .isEmail(),
@@ -40,17 +49,24 @@ router.post('/sign-up', csurfProtection, [
 
 
 /* GET users listing. */
-router.get('/sign-in', csurfProtection, function(req, res, next) {
-  var errors = req.flash('error');
-  res.render('user/signin', {
-    title: 'Sign in',
-    csrf: req.csrfToken(),
-    hasErrors: (errors.length > 0),
-    errorsMessage: errors
-  });
-});
+router.get('/sign-in',
+  isNotLogged,
+  csurfProtection,
+  validator(),
+  
+  function(req, res, next) {
+    var errors = req.flash('error');
+    res.render('user/signin', {
+      title: 'Sign in',
+      csrf: req.csrfToken(),
+      hasErrors: (errors.length > 0),
+      errorsMessage: errors
+    });
+  }
+);
 
 router.post('/sign-in',
+  isNotLogged,
   csurfProtection,
   
   passport.authenticate('local.signin', {
@@ -77,6 +93,13 @@ function isLogged(req, res, next) {
     return res.redirect('/');
   }
   next();
+}
+
+function isNotLogged(req, res, next) {
+  if (!req.isAuthenticated()) {
+    next();
+  }
+  return res.redirect('/');
 }
 
 module.exports = router;
