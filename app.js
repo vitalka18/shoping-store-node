@@ -8,6 +8,8 @@ var expressHbs = require('express-handlebars');
 var mongoose = require('mongoose');
 var session = require('express-session');
 var ExpressSessions = require('express-sessions');
+var passport = require('passport');
+var flash = require('connect-flash');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -18,6 +20,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/shop-store', {
   useMongoClient: true
 });
+require('./config/passport');
 
 // view engine setup
 app.engine('.hbs', expressHbs({
@@ -29,14 +32,20 @@ app.set('view engine', '.hbs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
+  secret: 'secret_Store_express',
+  saveUninitialized: true,
+  name: 'timonAndPumba',
+  resave: false,
   cookie: {
     path: '/',
     httpOnly: true,
-    maxAge: 86400
+    maxAge: 8640000
   },
-  secret: 'secret_Store_express',
-  name: 'timonAndPumba',
   store: new ExpressSessions({
     storage: 'mongodb',
     instance: mongoose, 
@@ -44,17 +53,18 @@ app.use(session({
     port: 27017,
     db: 'shop-store',
     collection: 'sessions',
-    expire: 86400
+    expire: 8640000
   })
 }));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser('secret_Store_express'));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

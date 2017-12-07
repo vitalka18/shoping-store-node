@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-md-4 offset-md-4 pb-5">
+
+
+    <div class="card">
+      
+      <h1 class="card-header bg-info text-white text-center">
+        {{ title }}
+      </h1>
+    
+      <div class="card-body">
+
+        <form id="signIn" name="signIn" action="/users/sign-in" method="post">
+          {{#if hasErrors }}
+            <fieldset class="mb-3 js-error border border-danger border-top-0  border-right-0  border-left-0 pb-3" role="alert">
+                <ol class="text-danger mb-0 pl-3">
+                  {{#each errorsMessage as |error|}}
+                    <li> {{error}} </li>
+                  {{/each}}
+                </ol>
+            </fieldset>
+          {{/if}}
+
+
+          <fieldset>
+            <div class="form-group">
+              <label for="email"><span class="text-danger">*</span> Email:</label>
+              <input class="form-control" name="email" id="email" placeholder="example_email@ex.ex" type="email" required>
+            </div>
+
+            <div class="form-group">
+              <label for="password"><span class="text-danger">*</span> Password:</label>
+              <input class="form-control" name="password" id="password" placeholder="****" type="password" required minlength="4">
+            </div>
+          </fieldset>
+
+          <hr>
+
+          {{!-- Hidden fields --}}
+            <input name="_csrf" value="{{ csrf }}" type="text" hidden="true">
+          {{!-- /Hidden fields --}}
+
+          <div class="form-btns text-center mt-4">
+            <button class="btn btn-primary text-white js-reset-error mr-3" style="min-width: 7rem" type="reset">Reset</button>
+            <button class="btn btn-success text-white" style="min-width: 7rem" type="submit">Send</button>
+          </div>
+        </form>
+
+      </div>{{!-- /.card-body --}}
+  
+    </div>{{!-- /.card --}}
+
+
+  </div>{{!-- /.col- --}}
+</div>{{!-- /.row --}}
+
+<script src="/javascripts/sign-up.js"></script>

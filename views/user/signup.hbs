@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-6 offset-md-3">
+  <div class="col-md-8 offset-md-2 pb-5">
 
 
     <div class="card">
@@ -10,29 +10,79 @@
     
       <div class="card-body">
 
-        <form action="/users/sign-up" method="post">      
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input class="form-control" name="email" id="email" type="email">
-          </div>
+        <form id="signUp" name="signUp" action="/users/sign-up" method="post">
+          {{#if hasErrors }}
+            <fieldset class="card mb-3 js-error" role="alert">
+              <legend class="card-header text-white bg-danger">Errors</legend>
+           
+              <div class="card-body">
+                <ol class="text-danger mb-0 pl-3">
+                  {{#each errorsMessage as |error|}}
+                    <li> {{error}} </li>
+                  {{/each}}
+                </ol>
+              </div>
+            </fieldset>
+          {{/if}}
 
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input class="form-control" name="password" id="password" type="password">
-          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <fieldset>
+                <legend>Credentials</legend>
 
-          <div class="form-group">
-            <label for="confirm_password">Confirm Password</label>
-            <input class="form-control" name="confirm_password" id="confirm_password" type="password">
-          </div>
+                <div class="form-group">
+                  <label for="email"><span class="text-danger">*</span> Email:</label>
+                  <input class="form-control" name="email" id="email" placeholder="example_email@ex.ex" type="email" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="password"><span class="text-danger">*</span> Password:</label>
+                  <input class="form-control" name="password" id="password" placeholder="****" type="password" required minlength="4">
+                </div>
+
+                <div class="form-group">
+                  <label for="confirm_password"><span class="text-danger">*</span> Confirm Password:</label>
+                  <input class="form-control" name="confirm_password" id="confirm_password" placeholder="****" type="password" required minlength="4" >
+                </div>
+              </fieldset>
+            </div>
+
+            <div class="col-md-6">
+              <fieldset>
+                <legend>Personal info</legend>
+
+                <div class="form-group">
+                  <label for="name">Name:</label>
+                  <input class="form-control" name="name" id="name" placeholder="Vasil" type="text">
+                </div>
+
+                <div class="form-group">
+                  <label for="surname">Surname:</label>
+                  <input class="form-control" name="surname" id="surname" placeholder="Ivanov" type="text">
+                </div>
+
+                <div class="form-group">
+                  <label for="birthday">Birthday:</label>
+                  <input class="form-control" name="birthday" id="birthday" placeholder="18.10.1994" type="date">
+                </div>
+
+                <div class="form-group">
+                  <label for="tel">Tel:</label>
+                  <input class="form-control" name="tel" id="tel" placeholder="+38 097 61 12 517" type="tel">
+                </div>
+              </fieldset>
+            </div>            
+          </div>        
+          
+          <hr>
 
           {{!-- Hidden fields --}}
             <input name="_csrf" value="{{ csrf }}" type="text" hidden="true">
           {{!-- /Hidden fields --}}
 
-          <div class="form-btns text-center">
-            <button class="btn btn-warning" type="reset">Reset</button>
-            <button class="btn btn-success text-white" type="submit">Send</button>
+          <div class="form-btns text-center mt-5">
+            <button class="btn btn-primary text-white js-reset-error mr-3" style="min-width: 10rem" type="reset">Reset</button>
+            <button class="btn btn-success text-white" style="min-width: 10rem" type="submit">Send</button>
           </div>
         </form>
 
@@ -43,3 +93,6 @@
 
   </div>{{!-- /.col- --}}
 </div>{{!-- /.row --}}
+
+<script src="/javascripts/sign-up.js"></script>
+

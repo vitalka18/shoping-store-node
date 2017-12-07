@@ -5,6 +5,7 @@ var { chunk } = require('lodash');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  console.log('asdas');
   Product.find(function(err, data) {
     if (err) {
       next(err);
