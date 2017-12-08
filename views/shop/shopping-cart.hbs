@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1 class="mb-5"> {{ title }} </h1>
+  </div>
+
+  {{#if session.cart.totalQty}}
+    <div class="col-md-9">
+      
+      <table class="table table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Image</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total price</th>
+            <th scope="col">Action</th>                    
+          </tr>
+        </thead>
+        
+        <tbody>
+          {{#each products as |product index|}}
+            <tr>
+              <td class="align-middle">{{ index }}</td>
+              <td class="align-middle">
+                <img src="{{ product.item.imagePath }}" width="100px">
+              </td>
+              <td class="align-middle">{{ product.item.title }}</td>
+              <td class="align-middle"><span class="fa fa-usd"></span> {{ product.item.price }}</td>
+              <td class="align-middle">{{ product.qty }}</td>
+              <td class="align-middle"><span class="fa fa-usd"></span> {{ product.price }}</td>
+              <td class="align-middle">
+                <a href="/product/{{ product.item._id }}" class="btn btn-info"><span class="fa fa-external-link"></span></a>
+                <a href="" class="btn btn-danger"><span class="fa fa-trash-o"></span></a>                
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <td class="bg-success text-white" colspan="4"></td>
+            <td class="bg-success text-white"><b>{{ session.cart.totalQty }}</b></td>
+            <td class="bg-success text-white"><b><span class="fa fa-usd"></span> {{ session.cart.totalPrice }}</b></td>
+            <td class="bg-success text-white"></td>
+          </tr>
+        </tfoot>
+      </table>
+    
+    </div>
+
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Cart Summary</h4>
+
+          <dl>
+            <dt>Total Quantity</dt>
+            <dd class="text-info">{{ session.cart.totalQty }}</dd>
+          </dl>
+          
+          <dl>
+            <dt>Total Price</dt>
+            <dd class="text-info"><span class="fa fa-usd"></span> {{ session.cart.totalPrice }}</dd>
+          </dl>
+
+          <a href="/clear-cart" class="btn btn-warning">Clear</a>
+          <a href="/checkout" class="btn btn-success">Checkout</a>
+        </div>
+      </div>
+    </div>
+  {{else}}
+    <div class="col-md-12">
+      Cart is empty
+    </div>
+  {{/if}}
+</div>

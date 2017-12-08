@@ -1,3 +1,14 @@
+{{#if successMsg}}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Success!</strong>
+    {{ successMsg }} =)
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+{{/if}}
+
+
 {{#each products as |chunk|}}
   <div class="row">
     {{#each chunk as |product|}}
@@ -23,7 +34,8 @@
             </div>
 
             <div class="col-md-7 text-right">
-              <a href="#" class="btn btn-success">Buy</a>
+              <a class="btn btn-success" href="/add-to-cart/{{ product.id }}">Buy</a>
+              <a class="btn btn-default" href="/product/{{ product.id }}">Show</a>
             </div>
           </div>
         </div>

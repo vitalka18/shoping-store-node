@@ -14,6 +14,7 @@ router.get('/sign-up',
   
   function(req, res, next) {
     var errors = req.flash('error');
+  
     res.render('user/signup', {
       title: 'Sign up',
       csrf: req.csrfToken(),

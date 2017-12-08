@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <h1>{{ title }}</h1>
+
+    <fieldset id="charge-errors" class="card mb-3 js-error {{#if noError}} d-none {{/if}}" role="alert">       
+      <div class="card-body text-danger">
+        {{ errorMessage }}
+      </div>
+    </fieldset>
+    
+    <h6>
+      Total price:
+      <span class="badge badge-success">
+        <span class="fa fa-usd"></span> {{ totalPrice }}
+      </span>
+    </h6>
+
+    <form id="checkout" name="checkout" action="/checkout" method="post">
+      <fieldset id="userInfo">
+        <legend>User info</legend>
+
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input
+            class="form-control"\
+            id="name"
+            name="name" 
+            placeholder="Vasil" 
+            required
+            pattern="(\w+)\s+(\w+)"
+            type="text">
+        </div>
+
+        <div class="form-group">
+          <label for="address">Address:</label>
+          <input
+            class="form-control"
+            id="address"
+            name="address"
+            placeholder="Kiev, Shelavkina St., 12"
+            required
+            required="\w{5}"
+            type="text">
+        </div>
+      </fieldset>
+
+      <fieldset id="card" name="card">
+        <legend>Card info</legend>
+        <div id="card-element">
+          <!-- a Stripe Element will be inserted here. -->
+        </div>
+
+        <fieldset id="card-errors" class="card mb-3 js-error" style="display: none;" role="alert">       
+          <div class="card-body text-danger">
+            
+          </div>
+        </fieldset>
+
+       <hr>
+
+      {{!-- Hidden fields --}}
+        <input name="_csrf" value="{{ csrf }}" type="text" hidden="true">
+      {{!-- /Hidden fields --}}
+
+      <div class="form-btns text-center mt-4">
+        <button class="btn btn-primary text-white js-reset-error mr-3" style="min-width: 7rem" type="reset">
+          Reset
+        </button>
+    
+        <button class="btn btn-success text-white" style="min-width: 7rem" type="submit">
+          Send
+        </button>
+      </div>
+    </form>
+  </div> 
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="/javascripts/checkout.js"></script>
